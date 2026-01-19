@@ -55,6 +55,7 @@ fn run(args: Args) -> Result<()> {
         proton_path: proton_path.to_string_lossy().to_string(),
         exe_path: exe_full_path.to_string_lossy().to_string(),
         compat_data_path: compat_data_path.to_string_lossy().to_string(),
+        steam_client_path: steam.root_path().to_string_lossy().to_string(),
         app_id: args.app_id,
         launch_options,
     };

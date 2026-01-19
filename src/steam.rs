@@ -174,4 +174,8 @@ impl Steam {
             .join("compatdata")
             .join(app_id)
     }
+
+    pub fn root_path(&self) -> &Path {
+        &self.root
+    }
 }

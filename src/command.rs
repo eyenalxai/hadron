@@ -7,13 +7,17 @@ pub struct ProtonCommand {
     pub proton_path: String,
     pub exe_path: String,
     pub compat_data_path: String,
+    pub steam_client_path: String,
     pub app_id: String,
     pub launch_options: Option<String>,
 }
 
 impl ProtonCommand {
     pub fn build_command(&self) -> String {
-        let proton_cmd = format!("{} waitforexitandrun {}", self.proton_path, self.exe_path);
+        let proton_cmd = format!(
+            "'{}' waitforexitandrun '{}'",
+            self.proton_path, self.exe_path
+        );
 
         match &self.launch_options {
             Some(opts) if opts.contains("%command%") => opts.replace("%command%", &proton_cmd),
@@ -25,6 +29,10 @@ impl ProtonCommand {
     pub fn build_env(&self) -> Vec<(&str, &str)> {
         vec![
             ("STEAM_COMPAT_DATA_PATH", self.compat_data_path.as_str()),
+            (
+                "STEAM_COMPAT_CLIENT_INSTALL_PATH",
+                self.steam_client_path.as_str(),
+            ),
             ("SteamAppId", self.app_id.as_str()),
             ("SteamGameId", self.app_id.as_str()),
         ]
