@@ -1,5 +1,5 @@
 pkgname=hadron
-pkgver=0.2.1
+pkgver=0.2.3
 pkgrel=1
 pkgdesc="Launch Steam games with alternative executables through Proton"
 arch=('x86_64')
