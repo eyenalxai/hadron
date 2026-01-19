@@ -2,7 +2,7 @@ mod command;
 mod steam;
 mod vdf;
 
-use anyhow::Result;
+use anyhow::{Result, bail};
 use clap::Parser;
 
 use crate::command::ProtonCommand;
@@ -39,6 +39,14 @@ fn run(args: Args) -> Result<()> {
     let library_path = steam.find_library_for_app(&args.app_id)?;
     let install_dir = steam.get_install_dir(&library_path, &args.app_id)?;
     let exe_full_path = install_dir.join(&args.exe_path);
+
+    if !exe_full_path.exists() {
+        bail!(
+            "Executable not found: {}\nLooking in: {}",
+            args.exe_path,
+            install_dir.display()
+        );
+    }
 
     let compat_tool = steam.get_compat_tool(&args.app_id)?;
     let compat_tool_name = compat_tool
